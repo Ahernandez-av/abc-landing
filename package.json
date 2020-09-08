@@ -1,0 +1,14 @@
+{
+	"name": "abc-landing",
+	"version": "1.0.0",
+	"description": "Always Be Covering landing page.",
+	"main": "index.html",
+	"scripts": {
+		"compile:sass": "node-sass sass/main.scss css/style.css -w"
+	},
+	"author": "Alberto Hernández A",
+	"license": "ISC",
+	"dependencies": {
+		"node-sass": "^4.14.1"
+	}
+}

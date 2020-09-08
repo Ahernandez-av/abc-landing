@@ -1,0 +1,830 @@
+@import url("https://fonts.googleapis.com/css2?family=Russo+One&family=Titillium+Web:wght@400;600;700&display=swap");
+
+//VARIABLES
+$color-white: #fff;
+$color-black: #232a31;
+$color-primary-cello: #1f375b;
+$color-primary-dodger: #1493ff;
+$color-neutrals-Catskill: #f0f3f8;
+$color-neutrals-geyser: #cfd6db;
+$color-extended-emerald: #30e37b;
+
+//MEDIA QUERRIES
+/*
+0-414px:          xs
+0-812px:          s
+600-1024px:       m
+1024px +:         l
+
+
+$breakpoint argument choices:
+- xs
+- s
+- m
+- l
+
+*/
+@mixin respond($breakpoint) {
+  @if $breakpoint==xs {
+    @media (max-width: 400px) {
+      @content;
+    }
+  }
+
+  @if $breakpoint==s {
+    @media (max-width: 765px) {
+      @content;
+    }
+  }
+
+  @if $breakpoint==m {
+    @media (max-width: 1024px) {
+      @content;
+    }
+  }
+
+  @if $breakpoint==l {
+    @media (min-width: 1024px) {
+      @content;
+    }
+  }
+}
+
+//GRID
+.row {
+  max-width: 1184px;
+  margin: 0 auto;
+
+  &_card {
+    border-radius: 3rem;
+    overflow: hidden;
+
+    @include respond(s) {
+      border-radius: 2.4rem;
+    }
+  }
+
+  //Clearfix
+  &::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
+  [class^="col"] {
+    float: left;
+
+    @include respond(s) {
+      width: 100% !important;
+    }
+  }
+
+  .col-100 {
+    width: 100%;
+
+    @include respond(m) {
+      padding: 0 1.6rem;
+    }
+
+    @include respond(l) {
+      padding: 0 3.2rem;
+    }
+  }
+
+  .col-50 {
+    width: 50%;
+  }
+
+  .col-about-us {
+    width: 70%;
+
+    @include respond(l) {
+      width: 80%;
+    }
+
+    &.swap-right {
+      float: right;
+    }
+  }
+
+  .col-contact {
+    width: 30%;
+
+    @include respond(l) {
+      width: 20%;
+    }
+
+    & .swap-left {
+      float: left;
+    }
+  }
+}
+
+//BASE STYLING
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+a:link,
+a:visited {
+  text-decoration: none;
+  color: $color-primary-cello;
+  text-transform: uppercase;
+}
+
+a:hover {
+  color: $color-extended-emerald;
+}
+
+html {
+  font-size: 10px;
+  background-color: $color-neutrals-Catskill;
+}
+
+body {
+  font-family: "Titillium Web", sans-serif;
+  font-weight: 400;
+  color: $color-primary-cello;
+}
+
+main {
+  padding: 0 3.2rem 0 3.2rem;
+
+  @include respond(m) {
+    padding: 0 1.6rem 0 1.6rem;
+  }
+
+  @include respond(s) {
+    padding: 0 1.6rem 0 1.6rem;
+  }
+}
+
+//NAV
+nav {
+  position: relative;
+  margin: 3.2rem 0;
+
+  @include respond(s) {
+    margin: 1.6rem 0;
+  }
+
+  .nav__logo {
+    display: inline-block;
+
+    img {
+      width: 17.4rem;
+
+      @include respond(m) {
+        width: 13.1rem;
+      }
+
+      @include respond(s) {
+        width: 10.1rem;
+      }
+    }
+  }
+
+  .nav__menu {
+    float: right;
+    height: 5.8rem;
+    font-size: 1.4rem;
+
+    @include respond(xs) {
+      display: none;
+    }
+
+    @include respond(m) {
+      height: 4.4rem;
+      font-size: 1.2rem;
+    }
+
+    ul {
+      list-style: none;
+      margin: 1rem;
+
+      @include respond(m) {
+        margin: 0;
+      }
+
+      li {
+        display: inline-block;
+        padding: 0.8rem 1.6rem;
+
+        @include respond(m) {
+          padding: 0.8rem 0.8rem;
+        }
+      }
+    }
+  }
+
+  .nav__menu-toggle {
+    display: none;
+    float: right;
+    height: 3.4rem;
+    width: 3.4rem;
+
+    @include respond(xs) {
+      display: block;
+    }
+
+    input {
+      display: block;
+      width: 3.4rem;
+      height: 3.4rem;
+      position: absolute;
+      cursor: pointer;
+      opacity: 0;
+      z-index: 3;
+    }
+
+    .nav__menu-icon {
+      width: 2.6rem;
+      height: 2.6rem;
+      margin: .4rem;
+      background-image: url("../images/icon-menu.png");
+      background-size: cover;
+      position: relative;
+      z-index: 2;
+    }
+
+    img {
+      margin: 4px;
+      width: 2.6rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    &--menu {
+      z-index: 1;
+      visibility: hidden;
+      position: absolute;
+      display: block;
+      opacity: 0;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: $color-neutrals-Catskill;
+      transition: all 0.4s;
+
+      ul {
+        list-style-type: none;
+        width: 50%;
+        margin: 50% auto;
+        text-align: center;
+
+        li {
+          font-size: 1.8rem;
+          font-weight: 600;
+          margin: 2.4rem 0;
+        }
+      }
+    }
+
+    & input:checked~.nav__menu-toggle--menu {
+      visibility: visible;
+      opacity: 100;
+    }
+
+    & input:checked~.nav__menu-icon {
+      background-image: url("../images/icon-close.png");
+    }
+  }
+}
+
+.header {
+  .row {
+    background-color: $color-primary-cello;
+  }
+
+  &__heading {
+    height: 52rem;
+    color: $color-white;
+    position: relative;
+
+    @include respond(m) {
+      height: 43.3rem;
+    }
+
+    @include respond(s) {
+      height: 32.4rem;
+    }
+
+    @include respond(xs) {
+      height: 29.2rem;
+    }
+
+    &--content {
+      position: absolute;
+      padding: 6.4rem;
+
+      @include respond(m) {
+        padding: 6.4rem 3.2rem;
+      }
+
+      @include respond(s) {
+        padding: 3.2rem 2.4rem;
+      }
+
+      @include respond(xs) {
+        padding: 3.2rem 1.6rem;
+      }
+
+      h1 {
+        font-family: "Russo One", sans-serif;
+        font-size: 4.8rem;
+        letter-spacing: 0.2rem;
+        margin-bottom: 3.2rem;
+
+        @include respond(m) {
+          font-size: 3.6rem;
+        }
+
+        @include respond(s) {
+          font-size: 2.4rem;
+          width: 90%;
+          margin-bottom: 1.6rem;
+        }
+      }
+
+      p {
+        font-size: 2.4rem;
+        margin-bottom: 6.4rem;
+
+        @include respond(m) {
+          font-size: 1.8rem;
+        }
+
+        @include respond(s) {
+          margin-bottom: 3.6rem;
+        }
+
+        @include respond(xs) {
+          font-size: 1.6rem;
+        }
+      }
+
+      .download-btn {
+        border-radius: 0.8rem;
+        background-color: $color-white;
+        border: none;
+        display: inline-block;
+        padding: 0.8rem 1.6rem;
+
+        img {
+          width: 15.5rem;
+
+          @include respond(s) {
+            width: 11.5rem;
+          }
+        }
+
+        &:hover {
+          background-color: $color-extended-emerald;
+        }
+      }
+    }
+  }
+
+  &__image {
+    height: 52rem;
+    background-image: url("../images/heading-l.png");
+    background-size: cover;
+
+    @include respond(m) {
+      background-image: url("../images/heading-m.png");
+      height: 43.3rem;
+    }
+
+    @include respond(s) {
+      background-image: url("../images/heading-s.png");
+      height: 32.4rem;
+    }
+
+    @include respond(xs) {
+      height: 29.2rem;
+    }
+  }
+
+  span {
+    color: $color-extended-emerald;
+  }
+}
+
+.advantages {
+  &__heading {
+    height: 35.2rem;
+    position: relative;
+
+    @include respond(m) {
+      height: 35.2rem;
+    }
+
+    @include respond(s) {
+      height: 27rem;
+    }
+
+    &--container {
+      padding: 3.2rem;
+      position: absolute;
+      transform: translate(0, -50%);
+      top: 50%;
+
+      @include respond(s) {
+        padding: 1.6rem;
+      }
+    }
+
+    h2 {
+      font-family: "Russo One", sans-serif;
+      letter-spacing: 0.1rem;
+      font-size: 2.4rem;
+      margin-bottom: 3.2rem;
+
+      @include respond(s) {
+        font-size: 2.1rem;
+      }
+
+      @include respond(xs) {
+        margin-bottom: 1.6rem;
+      }
+    }
+
+    p {
+      font-size: 1.8rem;
+
+      @include respond(s) {
+        font-size: 1.6rem;
+      }
+    }
+  }
+
+  &__image {
+    border-radius: 3rem;
+    height: 35.2rem;
+    background-size: cover;
+
+    @include respond(m) {
+      height: 35.2rem;
+    }
+
+    @include respond(s) {
+      height: 27rem;
+    }
+
+    &--points {
+      background-image: url("../images/advantages-points-l.png");
+
+      @include respond(m) {
+        background-image: url("../images/advantages-points-m.png");
+      }
+
+      @include respond(s) {
+        background-image: url("../images/advantages-points-s.png");
+      }
+    }
+
+    &--win {
+      background-image: url("../images/advantages-win-l.png");
+
+      @include respond(m) {
+        background-image: url("../images/advantages-win-m.png");
+      }
+
+      @include respond(s) {
+        background-image: url("../images/advantages-win-s.png");
+      }
+    }
+
+    &--lines {
+      background-image: url("../images/advantages-lines-l.png");
+
+      @include respond(m) {
+        background-image: url("../images/advantages-lines-m.png");
+      }
+
+      @include respond(s) {
+        background-image: url("../images/advantages-lines-s.png");
+      }
+    }
+
+    &--no-books {
+      background-image: url("../images/advantages-no-books-l.png");
+
+      @include respond(m) {
+        background-image: url("../images/advantages-no-books-m.png");
+      }
+
+      @include respond(s) {
+        background-image: url("../images/advantages-no-books-s.png");
+      }
+    }
+  }
+
+  & .row .swap-left {
+    float: left;
+  }
+
+  & .row .swap-right {
+    float: right;
+  }
+
+  & .row {
+    margin-top: 3.2rem;
+
+    @include respond(s) {
+      margin-top: 1.6rem;
+    }
+  }
+}
+
+.how-it-works .col-50 {
+  background-color: $color-primary-dodger;
+}
+
+.how-it-works {
+  margin-top: 6.4rem;
+  margin-bottom: 6.4rem;
+
+  @include respond(xs) {
+    margin-top: 3.2rem;
+    margin-bottom: 3.2rem;
+  }
+
+  &__heading {
+    height: 54.1rem;
+
+    @include respond(m) {
+      height: 43.9rem;
+    }
+
+    @include respond(s) {
+      height: 33.7rem;
+    }
+
+    @include respond(xs) {
+      height: 21.1rem;
+    }
+
+    &__container {
+      width: 100%;
+      height: 100%;
+      position: relative;
+
+      &--content {
+        position: absolute;
+        top: 0;
+        padding: 6.4rem;
+
+        @include respond(m) {
+          padding: 6.4rem 3.2rem;
+        }
+
+        @include respond(s) {
+          padding: 3.2rem 2.4rem;
+        }
+
+        @include respond(xs) {
+          padding: 1.6rem;
+        }
+
+        h2 {
+          font-family: "Russo One", sans-serif;
+          letter-spacing: 0.1rem;
+          font-size: 4.8rem;
+          margin-bottom: 3.2rem;
+          color: $color-white;
+
+          @include respond(m) {
+            font-size: 3.6rem;
+          }
+
+          @include respond(xs) {
+            font-size: 2.4rem;
+            margin-bottom: 1.6rem;
+          }
+        }
+
+        p {
+          font-size: 2.4rem;
+          font-weight: 600;
+          color: $color-white;
+
+          @include respond(m) {
+            font-size: 1.8rem;
+          }
+
+          @include respond(s) {
+            font-size: 1.6rem;
+          }
+        }
+      }
+
+      .slideshow-buttons__container {
+        position: absolute;
+        width: 100%;
+        padding: 0 6.4rem 6.4rem 6.4rem;
+        bottom: 0;
+
+        @include respond(m) {
+          padding: 6.4rem 3.2rem;
+        }
+
+        @include respond(s) {
+          padding: 3.2rem 2.4rem;
+        }
+
+        @include respond(xs) {
+          padding: 0 1.6rem;
+        }
+      }
+    }
+  }
+
+  .slideshow-container {
+    .mySlides {
+      height: 54.1rem;
+
+      @include respond(m) {
+        height: 43.9rem;
+      }
+
+      @include respond(s) {
+        height: 33.7rem;
+      }
+
+      @include respond(xs) {
+        height: 28rem;
+      }
+
+      &--1 {
+        background-image: url("../images/home-screen-l.png");
+        background-size: cover;
+
+        @include respond(m) {
+          background-image: url("../images/home-screen-m.png");
+        }
+
+        @include respond(s) {
+          background-image: url("../images/home-screen-s.png");
+        }
+      }
+
+      &--2 {
+        background-image: url("../images/odds-screen-l.png");
+        background-size: cover;
+
+        @include respond(m) {
+          background-image: url("../images/odds-screen-m.png");
+        }
+
+        @include respond(s) {
+          background-image: url("../images/odds-screen-s.png");
+        }
+      }
+
+      &--3 {
+        background-image: url("../images/betslip-screen-l.png");
+        background-size: cover;
+
+        @include respond(m) {
+          background-image: url("../images/betslip-screen-m.png");
+        }
+
+        @include respond(s) {
+          background-image: url("../images/betslip-screen-s.png");
+        }
+      }
+
+      &--4 {
+        background-image: url("../images/picks-screen-l.png");
+        background-size: cover;
+
+        @include respond(m) {
+          background-image: url("../images/picks-screen-m.png");
+        }
+
+        @include respond(s) {
+          background-image: url("../images/picks-screen-s.png");
+        }
+      }
+    }
+  }
+
+  span {
+    color: $color-extended-emerald;
+    font-weight: 700;
+  }
+}
+
+button {
+  border-radius: 3rem;
+  border: 0.2rem solid $color-white;
+  width: 4.8rem;
+  height: 4.8rem;
+  margin-right: 2.4rem;
+  background-color: $color-primary-dodger;
+  color: $color-white;
+  font-family: "Titillium Web", sans-serif;
+  font-size: 2.4rem;
+  font-weight: 700;
+  outline-width: 0;
+
+  @include respond(s) {
+    height: 4rem;
+    width: 4rem;
+    font-size: 1.4rem;
+    margin-right: 1.6rem;
+  }
+}
+
+.active {
+  background-color: $color-white;
+  color: $color-primary-dodger;
+}
+
+.about-us {
+  &__container {
+    padding: 3.2rem 0 3.2rem 6.4rem;
+    border-left: 0.2rem solid $color-neutrals-geyser;
+
+    @media (max-width: 766px) {
+      padding: 0 0 3.2rem 0;
+      border-bottom: 0.2rem solid $color-neutrals-geyser;
+      border-left: none;
+      margin-bottom: 3.2rem;
+    }
+
+    h3 {
+      font-family: "Russo One", sans-serif;
+      font-size: 2.4rem;
+      letter-spacing: 0.1rem;
+      margin-bottom: 0.8rem;
+    }
+
+    p {
+      font-size: 1.8rem;
+
+      &:not(:first-child) {
+        margin-top: 3.2rem;
+      }
+    }
+
+    a {
+      text-transform: lowercase;
+      color: $color-primary-dodger;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .contact__container {
+    img {
+      width: 17.4rem;
+    }
+
+    &--social {
+      a {
+        display: inline-block;
+        margin-right: 1.6rem;
+        margin-top: 6.4rem;
+
+        img {
+          width: 3.3rem;
+          height: 3.3rem;
+        }
+      }
+    }
+
+    &--link {
+      ul {
+        list-style: none;
+        font-size: 1.4rem;
+        margin-top: 3.2rem;
+
+        li {
+          &:not(:last-child) {
+            margin-bottom: 2.2rem;
+          }
+        }
+      }
+    }
+  }
+
+  span {
+    color: $color-extended-emerald;
+  }
+}
+
+footer {
+  background-color: $color-primary-cello;
+  padding: 1.6rem 0;
+  color: $color-white;
+  text-align: center;
+  font-size: 1.4rem;
+  margin-top: 6.4rem;
+}
